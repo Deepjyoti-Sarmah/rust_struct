@@ -19,7 +19,7 @@ impl Rectangle{
         self.width > other.width && self.height > other.height
     }
 }
-
+//without using self
 impl Rectangle{
     fn square(size: u32) -> Rectangle {
         Rectangle{
