@@ -225,40 +225,111 @@
 
 // Methods and ownership
 
-#[derive(Debug)]
-struct Rectangle {
-  width: u32,
-  height: u32,
+// #[derive(Debug)]
+// #[derive(Copy, Clone)]
+// struct Rectangle {
+//   width: u32,
+//   height: u32,
+// }
+
+// impl Rectangle {    
+//   fn area(&self) -> u32 {
+//     self.width * self.height
+//   }
+
+//   fn set_width(&mut self, width: u32) {
+//     self.width = width;
+//   }
+
+//   fn set_height(&mut self, height: u32) {
+//     self.height = height;
+//   }
+
+
+//   fn max(self, other: Self) -> Self {
+//     let w = self.width.max(other.width);
+//     let h = self.height.max(other.height);
+//     Rectangle { 
+//       width: w,
+//       height: h
+//     }
+//   }
+
+//   fn set_to_max(&mut self, other: Rectangle) {
+//     *self = self.max(other);
+//   }
+// }
+
+// fn main() {
+//   let mut rect = Rectangle {
+//     width: 0,
+//     height: 0
+//   };
+//   println!("{}", rect.area());
+
+//   rect.set_width(1);
+//   rect.set_height(0);
+
+//   println!("{}", rect.area());
+
+
+//   let other_rect = Rectangle { width: 0, height: 1 };
+//   let max_rect = rect.max(other_rect);
+
+//   println!("{:?}", max_rect);
+
+//   // println!("{}", rect.area());
+
+//   let max_set = rect.set_to_max(other_rect);
+
+//   println!("{:?}", max_set);
+
+// }
+
+
+//quize
+// struct Point(i32, i32);
+
+// impl Point {
+
+//   fn incr_x(&mut self) {
+//     self.0 += 1;
+//   }
+
+// }
+
+
+// fn main() {
+
+//   let mut p = Point(0, 0);
+//   p.incr_x();
+
+//   println!("{}", p.0);
+// }
+
+
+struct Point {
+  x: i32,
+  y: i32
 }
 
-impl Rectangle {    
-  fn area(&self) -> u32 {
-    self.width * self.height
-  }
 
-  fn set_width(&mut self, width: u32) {
-    self.width = width;
-  }
+impl Point {
 
-  fn max(self, other: Self) -> Self {
-    let w = self.width.max(other.width);
-    let h = self.height.max(other.height);
-    Rectangle { 
-      width: w,
-      height: h
-    }
+  fn get_x(&mut self) -> &mut i32 {
+    &mut self.x
   }
 }
+
 
 fn main() {
-  let rect = Rectangle {
-    width: 0,
-    height: 0
-  };
-  println!("{}", rect.area());
 
-  let other_rect = Rectangle { width: 1, height: 1 };
-  let max_rect = rect.max(other_rect);
+  let mut p = Point { x: 1, y: 2 };
+  let x = p.get_x();
 
-  println!("{:?}", max_rect);
+  *x += 1;
+  println!("{} {}", *x, p.y);
+
 }
+
+// Because get_x mutably borrows all of p, a program cannot use p in any way until x is no longer used. Therefore reading x and p.y in the same line is an ownership error.
