@@ -210,14 +210,55 @@
 // }
 
 //struct
-struct Point(i32, i32);
+// struct Point(i32, i32);
 
-fn main() {
-  let p = Point(1, 2);
+// fn main() {
+//   let p = Point(1, 2);
 
-  impl p {
-    fn x(&self) -> i32 { self.0 }
+//   impl p {
+//     fn x(&self) -> i32 { self.0 }
+//   }
+
+//   println!("{}", p.x());
+// }
+
+
+// Methods and ownership
+
+#[derive(Debug)]
+struct Rectangle {
+  width: u32,
+  height: u32,
+}
+
+impl Rectangle {    
+  fn area(&self) -> u32 {
+    self.width * self.height
   }
 
-  println!("{}", p.x());
+  fn set_width(&mut self, width: u32) {
+    self.width = width;
+  }
+
+  fn max(self, other: Self) -> Self {
+    let w = self.width.max(other.width);
+    let h = self.height.max(other.height);
+    Rectangle { 
+      width: w,
+      height: h
+    }
+  }
+}
+
+fn main() {
+  let rect = Rectangle {
+    width: 0,
+    height: 0
+  };
+  println!("{}", rect.area());
+
+  let other_rect = Rectangle { width: 1, height: 1 };
+  let max_rect = rect.max(other_rect);
+
+  println!("{:?}", max_rect);
 }
